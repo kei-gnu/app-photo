@@ -4,7 +4,7 @@ from functools import wraps
 
 # ユーザー名とパスワードの一覧 --- (*1)
 USER_LOGIN_LIST = {
-    'tomita': 'shingeki',
+    'kei': 'photo',
     'taro': 'aaa',
     'jiro': 'bbb',
     'sabu': 'ccc',
