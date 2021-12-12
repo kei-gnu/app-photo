@@ -4,11 +4,11 @@ from functools import wraps
 
 # ユーザー名とパスワードの一覧 --- (*1)
 USER_LOGIN_LIST = {
+    'tomita': 'shingeki',
     'taro': 'aaa',
     'jiro': 'bbb',
     'sabu': 'ccc',
-    'siro': 'ddd',
-    'goro': 'eee' }
+    }
 
 # ログインしているかの確認 --- (*2)
 def is_login():

@@ -5,7 +5,7 @@ import photo_db, sns_user as user # 自作モジュールを取り込む
 app = Flask(__name__)
 app.secret_key = 'dpwvgAxaY2iWHMb2'
 
-# ログイン処理を実現する --- (*1)
+# ログイン処理を実現する
 @app.route('/login')
 def login():
     return render_template('login_form.html')
@@ -22,7 +22,7 @@ def logout():
     return msg('ログアウトしました')
 
 
-# メイン画面 - メンバーの最新写真を全部表示する --- (*2)
+# メイン画面 - メンバーの最新写真を全部表示する 
 @app.route('/')
 @user.login_required
 def index():
@@ -30,7 +30,7 @@ def index():
                 id=user.get_id(),
                 photos=photo_db.get_files())
 
-# アルバムに入っている画像一覧を表示 --- (*3)
+# アルバムに入っている画像一覧を表示 
 @app.route('/album/<album_id>')
 @user.login_required
 def album_show(album_id):
@@ -39,14 +39,14 @@ def album_show(album_id):
             album=album,
             photos=photo_db.get_album_files(album_id))
 
-# ユーザーがアップした画像の一覧を表示 --- (*4)
+# ユーザーがアップした画像の一覧を表示 
 @app.route('/user/<user_id>')
 @user.login_required
 def user_page(user_id):
     return render_template('user.html', id=user_id,
             photos=photo_db.get_user_files(user_id))
 
-# 画像ファイルのアップロードに関する機能を実現する --- (*5)
+# 画像ファイルのアップロードに関する機能を実現する 
 @app.route('/upload')
 @user.login_required
 def upload():
@@ -56,18 +56,18 @@ def upload():
 @app.route('/upload/try', methods=['POST'])
 @user.login_required
 def upload_try():
-    # アップロードされたファイルを確認 --- (*6)
+    # アップロードされたファイルを確認 
     upfile = request.files.get('upfile', None)
     if upfile is None: return msg('アップロード失敗')
     if upfile.filename == '': return msg('アップロード失敗')
-    # どのアルバムに所属させるかをフォームから値を得る --- (*7)
+    # どのアルバムに所属させるかをフォームから値を得る 
     album_id = int(request.form.get('album', '0'))
-    # ファイルの保存とデータベースへの登録を行う --- (*8)
+    # ファイルの保存とデータベースへの登録を行う 
     photo_id = photo_db.save_file(user.get_id(), upfile, album_id)
     if photo_id == 0: return msg('データベースのエラー')
     return redirect('/user/' + str(user.get_id()))
 
-# アルバムの作成機能 ---  (*9)
+# アルバムの作成機能 
 @app.route('/album/new')
 @user.login_required
 def album_new():
@@ -81,7 +81,7 @@ def album_new_try():
     return redirect('/upload')
 
 
-# 画像ファイルを送信する機能 --- (*10)
+# 画像ファイルを送信する機能 
 @app.route('/photo/<file_id>')
 @user.login_required
 def photo(file_id):
