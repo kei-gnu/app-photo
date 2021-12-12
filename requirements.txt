@@ -1,2 +1,2 @@
 flask
-pil
+PIL == 8.0.1
